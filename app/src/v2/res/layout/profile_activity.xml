@@ -1,99 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:background="#C7AD6F">
+<layout>
 
-  <ImageView
-    android:id="@+id/profile_photo_iv"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="40dp"
-    android:layout_marginStart="40dp"
-    android:background="@drawable/corner_rounded_photo"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"/>
+    <data>
+        <import type="android.view.View"/>
+        <variable name="profile" type="com.danielsanchezc.profiledatabindingexample.Profile"/>
+        <variable name="dateFormatter" type="java.text.SimpleDateFormat"/>
+        <variable name="onProfilePhotoClick" type="android.view.View.OnClickListener"/>
+    </data>
 
-  <TextView
-    android:id="@+id/profile_first_name"
-    style="@style/TextAppearance.AppCompat.Body1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginStart="24dp"
-    android:textSize="24sp"
-    app:layout_constraintStart_toEndOf="@+id/profile_photo_iv"
-    app:layout_constraintTop_toTopOf="@+id/profile_photo_iv"
-    tools:text="Guybrush"/>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#C7AD6F">
 
-  <TextView
-    android:id="@+id/profile_middle_name"
-    style="@style/TextAppearance.AppCompat.Body1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="24sp"
-    app:layout_constraintBottom_toTopOf="@+id/profile_last_name"
-    app:layout_constraintStart_toStartOf="@+id/profile_first_name"
-    app:layout_constraintTop_toBottomOf="@+id/profile_first_name"
-    tools:text="Ulises"/>
+        <ImageView
+                android:id="@+id/profile_photo_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                app:circle="@{false}"
+                android:onClick="@{onProfilePhotoClick}"
+                android:layout_marginStart="40dp"
+                android:background="@drawable/corner_rounded_photo"
+                app:layout_constraintStart_toStartOf="parent"
+                app:imageUrl="@{profile.photoUrl}"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-  <TextView
-    android:id="@+id/profile_last_name"
-    style="@style/TextAppearance.AppCompat.Body1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textSize="24sp"
-    app:layout_constraintBottom_toBottomOf="@+id/profile_photo_iv"
-    app:layout_constraintStart_toStartOf="@+id/profile_middle_name"
-    tools:text="Threepwood"/>
+        <TextView
+                android:id="@+id/profile_first_name"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:textSize="24sp"
+                app:layout_constraintStart_toEndOf="@+id/profile_photo_iv"
+                app:layout_constraintTop_toTopOf="@+id/profile_photo_iv"
+                android:text="@{profile.firstName}"
+                tools:text="Guybrush"/>
 
-  <TextView
-    android:id="@+id/profile_photo_born_title_tv"
-    style="@style/TextAppearance.AppCompat.Body1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="24dp"
-    android:layout_marginStart="8dp"
-    android:text="Nacimiento"
-    android:textSize="24sp"
-    app:layout_constraintStart_toStartOf="@+id/profile_photo_iv"
-    app:layout_constraintTop_toBottomOf="@+id/profile_photo_iv"/>
+        <TextView
+                android:id="@+id/profile_middle_name"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/profile_last_name"
+                app:layout_constraintStart_toStartOf="@+id/profile_first_name"
+                app:layout_constraintTop_toBottomOf="@+id/profile_first_name"
+                android:text="@{profile.middleName}"
+                tools:text="Ulises"/>
 
-  <TextView
-    android:id="@+id/profile_born_date_tv"
-    style="@style/TextAppearance.AppCompat.Body2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
-    android:layout_marginStart="4dp"
-    android:text="29 de Febrero del 1687"
-    android:textSize="24sp"
-    app:layout_constraintStart_toStartOf="@+id/profile_photo_born_title_tv"
-    app:layout_constraintTop_toBottomOf="@+id/profile_photo_born_title_tv"/>
+        <TextView
+                android:id="@+id/profile_last_name"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@+id/profile_photo_iv"
+                app:layout_constraintStart_toStartOf="@+id/profile_middle_name"
+                android:text="@{profile.lastName}"
+                tools:text="Threepwood"/>
 
-  <TextView
-    android:id="@+id/profile_photo_death_title_tv"
-    style="@style/TextAppearance.AppCompat.Body1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="24dp"
-    android:text="Muerte"
-    android:textSize="24sp"
-    app:layout_constraintStart_toStartOf="@+id/profile_photo_born_title_tv"
-    app:layout_constraintTop_toBottomOf="@+id/profile_born_date_tv"/>
+        <TextView
+                android:id="@+id/profile_photo_born_title_tv"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="8dp"
+                android:text="Nacimiento"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/profile_photo_iv"
+                app:layout_constraintTop_toBottomOf="@+id/profile_photo_iv"/>
 
-  <TextView
-    android:id="@+id/profile_death_date_tv"
-    style="@style/TextAppearance.AppCompat.Body2"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="4dp"
-    android:layout_marginStart="4dp"
-    android:text="3 de Abril del 2013"
-    android:textSize="24sp"
-    app:layout_constraintStart_toStartOf="@+id/profile_photo_born_title_tv"
-    app:layout_constraintTop_toBottomOf="@+id/profile_photo_death_title_tv"/>
+        <TextView
+                android:id="@+id/profile_born_date_tv"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="4dp"
+                tools:text="29 de Febrero del 1687"
+                app:date="@{profile.bornDate}"
+                app:dateFormat="@{`dd MMMM yyyy`}"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/profile_photo_born_title_tv"
+                app:layout_constraintTop_toBottomOf="@+id/profile_photo_born_title_tv"/>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+                android:id="@+id/profile_photo_death_title_tv"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:visibility="@{profile.deathDate == null ? View.GONE : View.VISIBLE}"
+                android:text="Muerte"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/profile_photo_born_title_tv"
+                app:layout_constraintTop_toBottomOf="@+id/profile_born_date_tv"/>
+
+        <TextView
+                android:id="@+id/profile_death_date_tv"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="4dp"
+                tools:text="3 de Abril del 2013"
+                android:visibility="@{profile.deathDate == null ? View.GONE : View.VISIBLE}"
+                app:date="@{profile.deathDate}"
+                app:dateFormat="@{`dd MMMM yyyy`}"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="@+id/profile_photo_born_title_tv"
+                app:layout_constraintTop_toBottomOf="@+id/profile_photo_death_title_tv"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
