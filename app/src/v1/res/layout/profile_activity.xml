@@ -1,58 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    <data>
-        <variable name="profile" type="com.danielsanchezc.profiledatabindingexample.Profile"/>
-        <variable name="dateFormatter" type="java.text.SimpleDateFormat"/>
-        <variable name="onProfilePhotoClick" type="android.view.View.OnClickListener"/>
-    </data>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools">
+  <data>
+    <import type="android.view.View"/>
+    <variable
+      name="profile"
+      type="com.danielsanchezc.profiledatabindingexample.Profile"/>
+    <variable
+      name="dateFormatter"
+      type="java.text.SimpleDateFormat"/>
+    <variable
+      name="onProfilePhotoClick"
+      type="android.view.View.OnClickListener"/>
+  </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#00B8D4">
+  <androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00B8D4">
 
-        <ImageView
-                android:id="@+id/profile_photo_iv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:background="@drawable/rounded_photo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:imageUrl="@{profile.photoUrl}"
-                android:onClick="@{onProfilePhotoClick}"
-                app:layout_constraintTop_toTopOf="parent"/>
+    <ImageView
+      android:id="@+id/profile_photo_iv"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="40dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginEnd="8dp"
+      android:background="@drawable/rounded_photo"
+      android:onClick="@{onProfilePhotoClick}"
+      app:circle="@{true}"
+      app:imageUrl="@{profile.photoUrl}"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"/>
 
-        <TextView
-                android:id="@+id/profile_complete_name_tv"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_photo_iv"
-                android:text="@{profile.firstName + profile.middleName + profile.lastName}"
-                tools:text="Guybrush Ulises Threepwood"/>
+    <TextView
+      android:id="@+id/profile_complete_name_tv"
+      style="@style/TextAppearance.AppCompat.Body1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:text="@{profile.firstName + ` ` + profile.middleName + ` ` + profile.lastName}"
+      android:textSize="20sp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/profile_photo_iv"
+      tools:text="Guybrush Ulises Threepwood"/>
 
-        <TextView
-                android:id="@+id/profile_born_and_death_date_tv"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/profile_complete_name_tv"
-                android:text="@{profile.deathDate != null ? dateFormatter.format(profile.bornDate) + ` - `+ dateFormatter.format(profile.deathDate) : dateFormatter.format(profile.bornDate)}"
-                tools:text="1687"/>
+    <TextView
+      android:id="@+id/profile_born_date_tv"
+      style="@style/TextAppearance.AppCompat.Body1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginEnd="8dp"
+      android:textSize="20sp"
+      app:date="@{profile.bornDate}"
+      app:dateFormat="@{`YYYY`}"
+      app:layout_constraintBottom_toBottomOf="@+id/separatorView"
+      app:layout_constraintEnd_toStartOf="@+id/separatorView"
+      app:layout_constraintTop_toTopOf="@+id/separatorView"
+      tools:text="1687"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+      android:id="@+id/separatorView"
+      style="@style/TextAppearance.AppCompat.Body1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="16dp"
+      android:layout_marginStart="8dp"
+      android:layout_marginEnd="8dp"
+      android:text="-"
+      android:textSize="20sp"
+      android:visibility="@{profile.deathDate == null ? View.GONE : View.VISIBLE}"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/profile_complete_name_tv"/>
+
+    <TextView
+      android:id="@+id/profile_death_date_tv"
+      style="@style/TextAppearance.AppCompat.Body1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginStart="8dp"
+      android:textSize="20sp"
+      android:visibility="@{profile.deathDate == null ? View.GONE : View.VISIBLE}"
+      app:date="@{profile.deathDate}"
+      app:dateFormat="@{`YYYY`}"
+      app:layout_constraintBottom_toBottomOf="@+id/separatorView"
+      app:layout_constraintStart_toEndOf="@+id/separatorView"
+      app:layout_constraintTop_toTopOf="@+id/separatorView"
+      tools:text="1687"/>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
