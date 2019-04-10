@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable name="profile" type="com.danielsanchezc.profiledatabindingexample.Profile"/>
+        <variable name="dateFormatter" type="java.text.SimpleDateFormat"/>
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -18,6 +23,7 @@
                 android:background="@drawable/rounded_photo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:imageUrl="@{profile.photoUrl}"
                 app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
@@ -30,6 +36,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profile_photo_iv"
+                android:text="@{profile.firstName + profile.middleName + profile.lastName}"
                 tools:text="Guybrush Ulises Threepwood"/>
 
         <TextView
@@ -42,6 +49,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/profile_complete_name_tv"
+                android:text="@{profile.deathDate != null ? dateFormatter.format(profile.bornDate) + ` - `+ dateFormatter.format(profile.deathDate) : dateFormatter.format(profile.bornDate)}"
                 tools:text="1687"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
