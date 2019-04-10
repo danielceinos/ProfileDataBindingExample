@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.request.RequestOptions
+import com.danielsanchezc.profiledatabindingexample.databinding.ProfileActivityBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -22,9 +24,11 @@ class ProfileActivity : AppCompatActivity() {
     private val bornAndDeathDate: TextView
         get() = findViewById(R.id.profile_born_and_death_date_tv)
 
+    private lateinit var binding: ProfileActivityBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.profile_activity)
+        binding = DataBindingUtil.setContentView(this, R.layout.profile_activity)
 
         val gc = GregorianCalendar()
         gc.set(GregorianCalendar.YEAR, 1687)
@@ -32,20 +36,20 @@ class ProfileActivity : AppCompatActivity() {
         gc.set(GregorianCalendar.DATE, 29)
 
         val guybrushProfile = Profile(
-                firstName = "Guybrush",
-                middleName = "Ulises",
-                lastName = "Threepwood",
-                bornDate = GregorianCalendar().apply {
-                    set(GregorianCalendar.YEAR, 1687)
-                    set(GregorianCalendar.MONTH, 2)
-                    set(GregorianCalendar.DATE, 29)
-                }.time,
-                deathDate = GregorianCalendar().apply {
-                    set(GregorianCalendar.YEAR, 2013)
-                    set(GregorianCalendar.MONTH, 4)
-                    set(GregorianCalendar.DATE, 3)
-                }.time,
-                photoUrl = "https://i.pinimg.com/originals/7f/dc/45/7fdc45bf7b245b896c12f1379750fe6e.jpg"
+            firstName = "Guybrush",
+            middleName = "Ulises",
+            lastName = "Threepwood",
+            bornDate = GregorianCalendar().apply {
+                set(GregorianCalendar.YEAR, 1687)
+                set(GregorianCalendar.MONTH, 2)
+                set(GregorianCalendar.DATE, 29)
+            }.time,
+            deathDate = GregorianCalendar().apply {
+                set(GregorianCalendar.YEAR, 2013)
+                set(GregorianCalendar.MONTH, 4)
+                set(GregorianCalendar.DATE, 3)
+            }.time,
+            photoUrl = "https://i.pinimg.com/originals/7f/dc/45/7fdc45bf7b245b896c12f1379750fe6e.jpg"
         )
 
         bind(guybrushProfile)
@@ -54,16 +58,17 @@ class ProfileActivity : AppCompatActivity() {
     private fun bind(profile: Profile) {
 
         GlideApp.with(this)
-                .load(profile.photoUrl)
-                .apply(RequestOptions.circleCropTransform())
-                .placeholder(R.drawable.rounded_photo)
-                .into(profilePhoto)
+            .load(profile.photoUrl)
+            .apply(RequestOptions.circleCropTransform())
+            .placeholder(R.drawable.rounded_photo)
+            .into(profilePhoto)
 
         completeName.text = with(profile) { "$firstName $middleName $lastName" }
 
         val dateFormatter = SimpleDateFormat("yyyy")
         if (profile.deathDate != null)
-            bornAndDeathDate.text = with(profile) { "${dateFormatter.format(bornDate)} - ${dateFormatter.format(deathDate)}" }
+            bornAndDeathDate.text =
+                with(profile) { "${dateFormatter.format(bornDate)} - ${dateFormatter.format(deathDate)}" }
         else
             bornAndDeathDate.text = with(profile) { dateFormatter.format(bornDate) }
 
