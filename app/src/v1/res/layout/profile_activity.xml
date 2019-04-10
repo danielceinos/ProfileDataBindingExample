@@ -3,6 +3,7 @@
     <data>
         <variable name="profile" type="com.danielsanchezc.profiledatabindingexample.Profile"/>
         <variable name="dateFormatter" type="java.text.SimpleDateFormat"/>
+        <variable name="onProfilePhotoClick" type="android.view.View.OnClickListener"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,6 +25,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:imageUrl="@{profile.photoUrl}"
+                android:onClick="@{onProfilePhotoClick}"
                 app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView

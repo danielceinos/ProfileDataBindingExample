@@ -1,6 +1,9 @@
 package com.danielsanchezc.profiledatabindingexample
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.danielsanchezc.profiledatabindingexample.databinding.ProfileActivityBinding
@@ -35,5 +38,8 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.dateFormatter = SimpleDateFormat("yyyy")
         binding.profile = guybrushProfile
+        binding.onProfilePhotoClick = View.OnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(guybrushProfile.photoUrl) })
+        }
     }
 }
