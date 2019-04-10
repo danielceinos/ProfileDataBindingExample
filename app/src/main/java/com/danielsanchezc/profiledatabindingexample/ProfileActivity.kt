@@ -3,8 +3,6 @@ package com.danielsanchezc.profiledatabindingexample
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.request.RequestOptions
@@ -14,15 +12,6 @@ import java.util.*
 
 
 class ProfileActivity : AppCompatActivity() {
-
-    private val profilePhoto: ImageView
-        get() = findViewById(R.id.profile_photo_iv)
-
-    private val completeName: TextView
-        get() = findViewById(R.id.profile_complete_name_tv)
-
-    private val bornAndDeathDate: TextView
-        get() = findViewById(R.id.profile_born_and_death_date_tv)
 
     private lateinit var binding: ProfileActivityBinding
 
@@ -61,18 +50,20 @@ class ProfileActivity : AppCompatActivity() {
             .load(profile.photoUrl)
             .apply(RequestOptions.circleCropTransform())
             .placeholder(R.drawable.rounded_photo)
-            .into(profilePhoto)
+            .into(binding.profilePhotoIv)
 
-        completeName.text = with(profile) { "$firstName $middleName $lastName" }
+        binding.profileCompleteNameTv.text = with(profile) { "$firstName $middleName $lastName" }
 
         val dateFormatter = SimpleDateFormat("yyyy")
-        if (profile.deathDate != null)
-            bornAndDeathDate.text =
-                with(profile) { "${dateFormatter.format(bornDate)} - ${dateFormatter.format(deathDate)}" }
-        else
-            bornAndDeathDate.text = with(profile) { dateFormatter.format(bornDate) }
 
-        profilePhoto.setOnClickListener {
+        binding.profileBornAndDeathDateTv.text = with(profile) {
+            if (deathDate != null)
+                "${dateFormatter.format(bornDate)} - ${dateFormatter.format(deathDate)}"
+            else
+                dateFormatter.format(bornDate)
+        }
+
+        binding.profilePhotoIv.setOnClickListener {
             startActivity(Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(profile.photoUrl) })
         }
     }
